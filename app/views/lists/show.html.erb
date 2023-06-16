@@ -2,19 +2,20 @@
   <h1><%= @list.name %></h1>
 </div>
 
-<div class="container display-flex-inline justify-content-flex-start">
-    <% @list.movies.each do |movie| %>
-      <div class="card display-flex">
-          <p class="d-flex justify-content-center"><%= movie.title %></p>
-          <p class="d-flex justify-content-center"><%= movie.rating %></p>
-          <p class="d-flex justify-content-center"><%= movie.overview %></p>
-          <div class="d-flex justify-content-center"><%= image_tag movie.poster_url, width: 150 %></div>
-        </div>
-      </div>
-      <% end %>
+<div class="cards">
+  <% @list.movies.each do |movie| %>
+<div class="card-product">
+  <div><%= image_tag(movie.poster_url, width: 400, height: 300, crop: :fill) %></div>
+  <div class="card-product-infos">
+    <h2><%= movie.title %></h2>
+    <p><%= movie.rating %></p>
+    <p><%= movie.overview %></p>
+    <%= link_to "Delete", bookmark_path(Bookmark.find_by(movie: movie, list: @list)), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-danger btn-sm", style: "margin-top:6px" %>
+  </div>
+</div>
+    <% end %>
 </div>
 
 
-
-<%= link_to "Back to list", lists_path %>
-<%= link_to "Add a movie", new_list_bookmark_path(@list) %>
+<%= link_to "Back to list", lists_path, class: "btn btn-secondary", style: "margin:10px" %>
+<%= link_to "Add a movie", new_list_bookmark_path(@list), class: "btn btn-success" %>
